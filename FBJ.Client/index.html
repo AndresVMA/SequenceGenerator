@@ -39,18 +39,19 @@
           success: function (data) {
             if (data && data.length > 0) {
               
-              var specialWords = ['Fizz', 'Buzz', 'Jazz', 'FizzBuzz', 'FizzBuzzJazz'];
+              var specialWords = ['Fizz', 'Buzz', 'Jazz'];
 
               var outputRows = '';
               for (var i = 0; i < data.length; i++) {
-                console.log(specialWords);
-                console.log(specialWords.indexOf(data[i]));
-                if (specialWords.indexOf(data[i]) > 0) {
+                console.log(specialWords[0]);
+                console.log(data[i]);
+                if (data[i].includes(specialWords[0])  ||
+                  data[i].includes(specialWords[1])  ||
+                  data[i].includes(specialWords[2]) ) {
                   outputRows += `<tr class="text-primary"><td>${data[i]}</td></tr>`
                 } else {
                   outputRows += `<tr><td>${data[i]}</td></tr>`
                 }
-                console.log(data[i]);
               }
 
               var outputContainer = 
@@ -64,7 +65,6 @@
                     ${outputRows}
                   </tbody>
                  </table>`;
-              console.log(outputContainer);
               
               $('#outputContainer').html(outputContainer);
             }
