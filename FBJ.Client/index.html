@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./lib/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <input type="text" name="inputNumber" id="inputNumber">
+      </div>
+      <div class="col-12" id="outputContainer">
+        
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const requestNumber = 21;
+
+    $(document).ready(function () {
+
+      var inputText = $('#inputNumber');
+      
+      inputText.on('blur', function(event) {
+        const requestNumber = inputText.val();
+        $.ajax({
+          type: 'GET',
+          url: `https://localhost:5001/Sequence/${requestNumber}`,
+          crossDomain: true,
+          success: function (data) {
+            if (data && data.length > 0) {
+              
+              var specialWords = ['Fizz', 'Buzz', 'Jazz', 'FizzBuzz', 'FizzBuzzJazz'];
+
+              var outputRows = '';
+              for (var i = 0; i < data.length; i++) {
+                console.log(specialWords);
+                console.log(specialWords.indexOf(data[i]));
+                if (specialWords.indexOf(data[i]) > 0) {
+                  outputRows += `<tr class="text-primary"><td>${data[i]}</td></tr>`
+                } else {
+                  outputRows += `<tr><td>${data[i]}</td></tr>`
+                }
+                console.log(data[i]);
+              }
+
+              var outputContainer = 
+                `<table class="table table-dark">
+                  <thead>
+                    <tr>
+                      <th scope="col">#Number</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${outputRows}
+                  </tbody>
+                 </table>`;
+              console.log(outputContainer);
+              
+              $('#outputContainer').html(outputContainer);
+            }
+          },
+          error: function (errorText) {
+            console.log(errorText);
+          }
+        });
+      })
+
+      
+    })
+  </script>
+</body>
+
+</html>
